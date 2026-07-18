@@ -82,8 +82,6 @@ export default function Globe({ guesses, globeRef, practiceMode }: Props) {
         style={extraStyle}
       >
         <ReactGlobe
-          className="select-none decoration-transparent cursor-grab "
-          style={{ "-webkit-tap-highlight-color": "transparent" }}
           ref={globeRef}
           globeImageUrl={globeImg(nightMode)}
           width={size}
