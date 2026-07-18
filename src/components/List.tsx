@@ -1,4 +1,4 @@
-import { SyntheticEvent, useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { GlobeMethods } from "react-globe.gl";
 import { FormattedMessage } from "react-intl";
 import { City } from "../lib/city";

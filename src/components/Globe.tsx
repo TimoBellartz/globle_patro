@@ -1,10 +1,8 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef } from "react";
 import ReactGlobe, { GlobeMethods } from "react-globe.gl";
 import { City } from "../lib/city";
-import { answerCountry } from "../util/answer";
 import { globeImg } from "../util/globe";
 import { ThemeContext } from "../context/ThemeContext";
-import { getColour } from "../util/colour";
 import { isMobile } from "react-device-detect";
 
 type Props = {
@@ -16,11 +14,8 @@ type Props = {
 const ZOOM_SPEED = 1;
 
 export default function Globe({ guesses, globeRef, practiceMode }: Props) {
-  // State
-  const [places] = useState(guesses);
-
   // Theme
-  const { nightMode, prideMode, highContrast } = useContext(ThemeContext).theme;
+  const { nightMode } = useContext(ThemeContext).theme;
 
   // Globe size settings
   const size = isMobile ? 320 : 600; // px on one side
