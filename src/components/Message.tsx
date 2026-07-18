@@ -1,11 +1,6 @@
-// import useCheckMobile from "../hooks/useCheckMobile";
 import { isMobile } from "react-device-detect";
-import { answerCountry, answerName } from "../util/answer";
+import { answerName } from "../util/answer";
 import { FormattedMessage } from "react-intl";
-import { useContext } from "react";
-import { LocaleContext } from "../i18n/LocaleContext";
-import { langNameMap } from "../i18n/locales";
-import { Country } from "../lib/country";
 
 type Props = {
   win: boolean;
@@ -15,22 +10,12 @@ type Props = {
 };
 
 export function Message({ win, error, guesses, practiceMode }: Props) {
-  const { locale } = useContext(LocaleContext);
-
   let name = answerName;
-  if (locale !== "en-CA") {
-    const langName = langNameMap[locale];
-    name = answerCountry["properties"][langName];
-  }
   if (practiceMode) {
-    const answerCountry = JSON.parse(
+    const practiceAnswer = JSON.parse(
       localStorage.getItem("practice") as string
-    ) as Country;
-    name = answerCountry.properties.NAME;
-    if (locale !== "en-CA") {
-      const langName = langNameMap[locale];
-      name = answerCountry["properties"][langName];
-    }
+    );
+    name = practiceAnswer?.name || answerName;
   }
 
   if (error) {

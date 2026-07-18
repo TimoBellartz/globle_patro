@@ -1,44 +1,41 @@
 import { SyntheticEvent, useContext, useEffect, useState } from "react";
 import { GlobeMethods } from "react-globe.gl";
 import { FormattedMessage } from "react-intl";
-import { LocaleContext } from "../i18n/LocaleContext";
-import { Country, LanguageName } from "../lib/country";
-import { Locale } from "../lib/locale";
+import { City } from "../lib/city";
 import { answerName } from "../util/answer";
-import { findCentre, turnGlobe } from "../util/globe";
 import Toggle from "./Toggle";
 
 type Props = {
-  guesses: Country[];
+  guesses: City[];
   win: boolean;
   globeRef: React.MutableRefObject<GlobeMethods>;
   practiceMode: boolean;
 };
 
-function reorderGuesses(guessList: Country[], practiceMode: boolean) {
+function reorderGuesses(guessList: City[], practiceMode: boolean) {
   return [...guessList].sort((a, b) => {
     // practice
     if (practiceMode) {
-      const answerCountry = JSON.parse(
+      const practiceAnswer = JSON.parse(
         localStorage.getItem("practice") as string
-      ) as Country;
-      const answerName = answerCountry.properties.NAME;
-      if (a.properties.NAME === answerName) {
+      ) as City;
+      const practiceName = practiceAnswer.name;
+      if (a.name === practiceName) {
         return -1;
-      } else if (b.properties.NAME === answerName) {
+      } else if (b.name === practiceName) {
         return 1;
       } else {
-        return a.proximity - b.proximity;
+        return (a.proximity ?? 0) - (b.proximity ?? 0);
       }
     }
 
     // daily
-    if (a.properties.NAME === answerName) {
+    if (a.name === answerName) {
       return -1;
-    } else if (b.properties.NAME === answerName) {
+    } else if (b.name === answerName) {
       return 1;
     } else {
-      return a.proximity - b.proximity;
+      return (a.proximity ?? 0) - (b.proximity ?? 0);
     }
   });
 }
@@ -48,19 +45,6 @@ export default function List({ guesses, win, globeRef, practiceMode }: Props) {
     reorderGuesses(guesses, practiceMode)
   );
   const [miles, setMiles] = useState(false);
-  const { locale } = useContext(LocaleContext);
-  const langNameMap: Record<Locale, LanguageName> = {
-    "pt-BR": "NAME_PT",
-    "es-MX": "NAME_ES",
-    "en-CA": "NAME_EN",
-    "fr-FR": "NAME_FR",
-    "de-DE": "NAME_DE",
-    "hu-HU": "NAME_HU",
-    "pl-PL": "NAME_PL",
-    "it-IT": "NAME_IT",
-    "sv-SE": "NAME_SV",
-  };
-  const langName = langNameMap[locale];
 
   useEffect(() => {
     setOrderedGuesses(reorderGuesses(guesses, practiceMode));
@@ -68,12 +52,11 @@ export default function List({ guesses, win, globeRef, practiceMode }: Props) {
 
   function formatKm(m: number, miles: boolean) {
     const METERS_PER_MILE = 1609.34;
-    const BIN = 10;
+    const BIN = 1;
     const value = miles ? m / METERS_PER_MILE : m / 1000;
     if (value < BIN) return "< " + BIN;
 
     const rounded = Math.round(value / BIN) * BIN;
-    // const max = min + BIN;
     const format = (num: number) =>
       num.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
@@ -81,14 +64,6 @@ export default function List({ guesses, win, globeRef, practiceMode }: Props) {
   }
 
   const qualifier = win ? "Answer" : "Closest";
-
-  function turnToCountry(e: SyntheticEvent, idx: number) {
-    const clickedCountry = isSortedByDistance
-      ? orderedGuesses[idx]
-      : guesses[idx];
-    const { lat, lng, altitude } = findCentre(clickedCountry);
-    turnGlobe({ lat, lng, altitude }, globeRef, "zoom");
-  }
 
   const closest = orderedGuesses[0];
   const farthest = orderedGuesses[orderedGuesses.length - 1];
@@ -113,26 +88,11 @@ export default function List({ guesses, win, globeRef, practiceMode }: Props) {
       )}
       <ul className="grid grid-cols-3 md:grid-cols-4 gap-3">
         {guessesToDisplay.map((guess, idx) => {
-          const { NAME_LEN, ABBREV, NAME, FLAG } = guess.properties;
-          const flag = (FLAG || "").toLocaleLowerCase();
-          let name = NAME_LEN >= 10 ? ABBREV : NAME;
-          if (locale !== "en-CA") {
-            name = guess.properties[langName];
-          }
-
           return (
             <li key={idx}>
-              <button
-                onClick={(e) => turnToCountry(e, idx)}
-                className="flex items-center cursor-pointer"
-              >
-                <img
-                  src={`https://flagcdn.com/w20/${flag.toLowerCase()}.png`}
-                  alt={name}
-                  className=""
-                />
-                <span className="ml-2 text-md text-left">{name}</span>
-              </button>
+              <span className="flex items-center">
+                <span className="ml-2 text-md text-left">{guess.name}</span>
+              </span>
             </li>
           );
         })}
@@ -142,7 +102,7 @@ export default function List({ guesses, win, globeRef, practiceMode }: Props) {
           <div className="flex items-center space-x-1">
             <p>
               <FormattedMessage id="Game8" />:{" "}
-              {formatKm(closest?.proximity, miles)}
+              {formatKm(closest?.proximity ?? 0, miles)}
             </p>
             <Toggle
               name="miles"

@@ -6,9 +6,8 @@ import localeList from "../i18n/messages";
 import { FormattedMessage } from "react-intl";
 import Auxilliary from "../components/Auxilliary";
 import { useNavigate } from "react-router-dom";
-import { Country } from "../lib/country";
 import Toggle from "../components/Toggle";
-const countryData: Country[] = require("../data/country_data.json").features;
+import belgianCities from "../data/belgian_cities";
 
 export default function Settings() {
   const themeContext = useContext(ThemeContext);
@@ -38,7 +37,7 @@ export default function Settings() {
 
   function enterPracticeMode() {
     const practiceAnswer =
-      countryData[Math.floor(Math.random() * countryData.length)];
+      belgianCities[Math.floor(Math.random() * belgianCities.length)];
     localStorage.setItem("practice", JSON.stringify(practiceAnswer));
     navigate("/game?practice_mode=true");
   }

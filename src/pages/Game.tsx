@@ -1,19 +1,19 @@
 import { lazy, Suspense, useEffect, useMemo, useRef, useState } from "react";
 import { GlobeMethods } from "react-globe.gl";
-import { Country } from "../lib/country";
+import { City } from "../lib/city";
 import { answerCountry, answerName } from "../util/answer";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import { Guesses, Stats } from "../lib/localStorage";
 import { dateDiffInDays, today } from "../util/dates";
-import { polygonDistance } from "../util/distance";
+import { cityDistance } from "../util/distance";
 import { getColourEmoji } from "../util/colour";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
+import belgianCities from "../data/belgian_cities";
 
 const Globe = lazy(() => import("../components/Globe"));
 const Guesser = lazy(() => import("../components/Guesser"));
 const List = lazy(() => import("../components/List"));
-const countryData: Country[] = require("../data/country_data.json").features;
 
 type Props = {
   reSpin: boolean;
@@ -47,26 +47,23 @@ export default function Game({ reSpin, setShowStats }: Props) {
 
   function enterPracticeMode() {
     const practiceAnswer =
-      countryData[Math.floor(Math.random() * countryData.length)];
+      belgianCities[Math.floor(Math.random() * belgianCities.length)];
     localStorage.setItem("practice", JSON.stringify(practiceAnswer));
     navigate("/game?practice_mode=true");
     setGuesses([]);
     setWin(false);
   }
 
-  const storedCountries = useMemo(() => {
+  const storedCities = useMemo(() => {
     if (today <= storedGuesses.day && !practiceMode) {
       const names = storedGuesses.countries;
       return names.map((guess) => {
-        const foundCountry = countryData.find((country) => {
-          return country.properties.NAME === guess;
+        const foundCity = belgianCities.find((city) => {
+          return city.name === guess;
         });
-        if (!foundCountry) throw new Error("Country mapping broken");
-        foundCountry["proximity"] = polygonDistance(
-          foundCountry,
-          answerCountry
-        );
-        return foundCountry;
+        if (!foundCity) throw new Error("City mapping broken");
+        foundCity["proximity"] = cityDistance(foundCity, answerCountry);
+        return foundCity;
       });
     }
     return [];
@@ -76,12 +73,12 @@ export default function Game({ reSpin, setShowStats }: Props) {
   // Check if win condition already met
   const alreadyWon = practiceMode
     ? false
-    : storedCountries?.map((c) => c.properties.NAME).includes(answerName);
+    : storedCities?.map((c) => c.name).includes(answerName);
 
   // Now we're ready to start the game! Set up the game states with the data we
   // already know from the stored info.
-  const [guesses, setGuesses] = useState<Country[]>(
-    practiceMode ? [] : storedCountries
+  const [guesses, setGuesses] = useState<City[]>(
+    practiceMode ? [] : storedCities
   );
   const [win, setWin] = useState(alreadyWon);
   const globeRef = useRef<GlobeMethods>(null!);
@@ -89,7 +86,7 @@ export default function Game({ reSpin, setShowStats }: Props) {
   // Whenever there's a new guess
   useEffect(() => {
     if (!practiceMode) {
-      const guessNames = guesses.map((country) => country.properties.NAME);
+      const guessNames = guesses.map((city) => city.name);
       storeGuesses({
         day: today,
         countries: guessNames,

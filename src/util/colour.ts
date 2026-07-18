@@ -5,8 +5,8 @@ import {
   interpolateGreys,
   interpolateTurbo,
 } from "d3-scale-chromatic";
-import { Country } from "../lib/country";
-import { polygonDistance } from "./distance";
+import { City } from "../lib/city";
+import { cityDistance } from "./distance";
 
 const GREEN_SQUARE = "🟩";
 const ORANGE_SQUARE = "🟧";
@@ -14,22 +14,20 @@ const RED_SQUARE = "🟥";
 const WHITE_SQUARE = "⬜";
 const YELLOW_SQUARE = "🟨";
 
-const MAX_DISTANCE = 15_000_000;
+// Belgium's Eifel region is roughly 60 km across.
+// Using 100 km as max to give good colour spread.
+const MAX_DISTANCE = 100_000;
 
 export const getColour = (
-  guess: Country,
-  answer: Country,
+  guess: City,
+  answer: City,
   nightMode: boolean,
   highContrast: boolean,
   prideMode: boolean
 ) => {
-  if (guess.properties?.TYPE === "Territory") {
-    if (highContrast) return "white";
-    return "#BBBBBB";
-  }
-  if (guess.properties.NAME === answer.properties.NAME) return "green";
+  if (guess.name === answer.name) return "green";
   if (guess.proximity == null) {
-    guess["proximity"] = polygonDistance(guess, answer);
+    guess["proximity"] = cityDistance(guess, answer);
   }
   const gradient = highContrast
     ? interpolateGreys
@@ -43,10 +41,10 @@ export const getColour = (
   return colour;
 };
 
-export const getColourEmoji = (guess: Country, answer: Country) => {
-  if (guess.properties.NAME === answer.properties.NAME) return GREEN_SQUARE;
+export const getColourEmoji = (guess: City, answer: City) => {
+  if (guess.name === answer.name) return GREEN_SQUARE;
   if (guess.proximity == null) {
-    guess["proximity"] = polygonDistance(guess, answer);
+    guess["proximity"] = cityDistance(guess, answer);
   }
   const scale = guess.proximity / MAX_DISTANCE;
   if (scale < 0.1) {
