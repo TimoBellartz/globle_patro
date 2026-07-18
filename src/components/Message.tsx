@@ -1,4 +1,4 @@
-import { isMobile } from "react-device-detect";
+
 import { answerName } from "../util/answer";
 import { FormattedMessage } from "react-intl";
 
@@ -35,19 +35,7 @@ export function Message({ win, error, guesses, practiceMode }: Props) {
   } else if (guesses === 1) {
     return (
       <p className="text-gray-700 dark:text-gray-400 ">
-        <FormattedMessage
-          id="Game4"
-          values={{
-            span: (chunks: string) => {
-              try {
-                const [click, tap] = JSON.parse(chunks);
-                return isMobile ? <span>{tap}</span> : <span>{click}</span>;
-              } catch (e) {
-                return <span>{chunks}</span>;
-              }
-            },
-          }}
-        />
+        <FormattedMessage id="Game4" />
       </p>
     );
   } else {

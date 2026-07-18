@@ -1,6 +1,6 @@
 import { lazy, Suspense, useState } from "react";
 import { City } from "../lib/city";
-import { answerName } from "../util/answer";
+
 import { FormattedMessage } from "react-intl";
 import WinMessage from "../components/WinMessage";
 
@@ -10,7 +10,6 @@ const List = lazy(() => import("../components/List"));
 
 type Props = {
   reSpin: boolean;
-  setShowStats: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export default function Game({ reSpin }: Props) {
@@ -34,6 +33,20 @@ export default function Game({ reSpin }: Props) {
 
   return (
     <Suspense fallback={renderLoader()}>
+      <div className="my-6 px-4 space-y-4 text-center dark:text-gray-200">
+        <h2 className="text-2xl font-extrabold" style={{ fontFamily: "'Montserrat'" }}>
+          <FormattedMessage id="helpTitle" />
+        </h2>
+        <p className="text-sm md:text-base">
+          <FormattedMessage id="help1" />
+        </p>
+        <p className="text-sm md:text-base">
+          <FormattedMessage id="help2" />
+        </p>
+        <p className="text-sm md:text-base">
+          <FormattedMessage id="help3" />
+        </p>
+      </div>
       <WinMessage show={showWin} setShow={setShowWin} />
       <Guesser
         guesses={guesses}

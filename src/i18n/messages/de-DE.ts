@@ -2,14 +2,10 @@ import { Messages } from "../../lib/locale";
 
 export const German: Messages = {
   name: "Deutsch",
-  helpTitle: "Spielanleitung",
-  help1: `Jeden Tag gibt es ein neues geheimes Land. Dein Ziel ist es, dieses Land
-  in so wenig Versuchen wie möglich zu erraten. Jeder falsche Versuch wir die auf
-  dem Globus mit einer Farbe angezeigt, die die Nähe zum gesuchten Land verdeutlicht.
-  Je <b>wärmer</b> die Farbe, desto näher bist du an der richtigen Lösung.`,
-  help2: `Als Beispiel, wenn <b>Japan</b> das gesuchte Land ist, dann würden die folgenden
-  Länder mit diesen Farben angezeigt werden:`,
-  help3: `Es gibt jeden Tag ein neues geheimes Land!`,
+  helpTitle: "Nachricht von Frederick Wegner",
+  help1: `Ich musste wieder weiterziehen, da sie schneller waren als ihr. Ich bin auf der Flucht und um geheim zu halten, wo ich mich verstecke, verschlüssele ich meine Nachrichten. Aber ich bin sicher, ihr seid schlau genug, es herauszufinden!`,
+  help2: `So funktioniert es: Auf der Karte von Ostbelgien seht ihr verschiedene Städte und Dörfer. Gebt eure Vermutung ein, und ich verrate euch die Entfernung zu meinem Zielort.`,
+  help3: `Wenn ihr den richtigen Ort erratet, erfahrt ihr, wo ihr als Nächstes hingehen müsst. Viel Glück!`,
   France: "Frankreich",
   Nepal: "Nepal",
   Mongolia: "Mongolei",
@@ -37,13 +33,13 @@ export const German: Messages = {
   q7: "7. Ein Land fehlt oder ist fehlerhaft. Was kann ich tun?",
   a7: "Geographie kann ein schwieriges Thema sein, einige Ländergrenzen sind umstritten. Wenn du glaubst, dass eine Änderung notwendig ist, dann öffne bitte höflich ein Issue auf {GitHub} oder schreib mir eine DM auf {Twitter}.",
   GameTitle: "Spiel",
-  Game1: "Gib dein Land hier ein",
+  Game1: "Gib deinen Ort hier ein",
   Game2: "Eingeben",
-  Game3: "Gib hier den Namen des Landes ein um zu beginnen.",
-  Game4: `Zieh, <span>["klick auf", "drücke"]</span>, und zoom in den Globus um dir beim nächsten Versuch zu helfen.`,
-  Game5: "Ungültiger Versuch",
-  Game6: "Das Land wurde schon versucht",
-  Game7: "Das geheime Land ist {answer}!",
+  Game3: "Gib hier den Namen des Ortes ein, um zu beginnen.",
+  Game4: "Tipp: Achtet auf die Distanz und versucht Orte in dieser Nähe zu finden!",
+  Game5: "Unbekannter Ort",
+  Game6: "Dieser Ort wurde schon versucht",
+  Game7: "Das geheime Versteck ist in {answer}!",
   Game8: "Nächste Grenze",
   StatsTitle: "Statistiken",
   Stats1: "Letzter Sieg",
@@ -70,12 +66,12 @@ export const German: Messages = {
   Settings9: "Üben",
   Settings10: "Regenbogen aktiviert",
   Settings11: "Regenbogen deaktiviert",
-  Answer: "Answer", //TODO: Translate
-  Closest: "Closest", //TODO: Translate
-  Guessed: "Guessed", //TODO: Translate
-  PracticeMode: "You are in practice mode.", //TODO: Translate
-  PracticeExit: "Exit practice mode", //TODO: Translate
-  PracticeNew: "New practice game", //TODO: Translate
-  SortByGuesses: "Sort by order of guesses", //TODO: Translate
-  SortByDistance: "Sort by distance", //TODO: Translate
+  Answer: "Lösung",
+  Closest: "Nächste",
+  Guessed: "Geraten",
+  PracticeMode: "Du bist im Übungsmodus.",
+  PracticeExit: "Übungsmodus beenden",
+  PracticeNew: "Neues Übungsspiel",
+  SortByGuesses: "Nach geratener Reihenfolge sortieren",
+  SortByDistance: "Nach Distanz sortieren",
 };

@@ -16,7 +16,7 @@ type LocaleContextType = {
   setLocale: React.Dispatch<React.SetStateAction<Locale>> | null;
 };
 
-const initialLocale: Locale = "en-CA";
+const initialLocale: Locale = "de-DE";
 
 const initialLocaleContext: LocaleContextType = {
   locale: initialLocale,
