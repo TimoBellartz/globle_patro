@@ -12,7 +12,7 @@ type Props = {
   guesses: City[];
   setGuesses: React.Dispatch<React.SetStateAction<City[]>>;
   win: boolean;
-  setWin: React.Dispatch<React.SetStateAction<boolean>>;
+  setWin: () => void;
   practiceMode: boolean;
 };
 
@@ -21,7 +21,6 @@ export default function Guesser({
   setGuesses,
   win,
   setWin,
-  practiceMode,
 }: Props) {
   const [guessName, setGuessName] = useState("");
   const [error, setError] = useState("");
@@ -54,15 +53,8 @@ export default function Guesser({
       ref.current?.select();
       return;
     }
-    if (practiceMode) {
-      const practiceAnswer = JSON.parse(
-        localStorage.getItem("practice") as string
-      ) as City;
-      if (guessCity.name === practiceAnswer.name) {
-        setWin(true);
-      }
-    } else if (guessCity.name === answerName) {
-      setWin(true);
+    if (guessCity.name === answerName) {
+      setWin();
     }
     return guessCity;
   }
@@ -71,17 +63,6 @@ export default function Guesser({
     e.preventDefault();
     setError("");
     let guessCity = runChecks();
-    if (practiceMode) {
-      const practiceAnswer = JSON.parse(
-        localStorage.getItem("practice") as string
-      ) as City;
-      if (guessCity && practiceAnswer) {
-        guessCity["proximity"] = cityDistance(guessCity, practiceAnswer);
-        setGuesses([...guesses, guessCity]);
-        setGuessName("");
-        return;
-      }
-    }
     if (guessCity && answerCountry) {
       guessCity["proximity"] = cityDistance(guessCity, answerCountry);
       setGuesses([...guesses, guessCity]);
@@ -126,7 +107,7 @@ export default function Guesser({
         win={win}
         error={error}
         guesses={guesses.length}
-        practiceMode={practiceMode}
+        practiceMode={false}
       />
     </div>
   );
