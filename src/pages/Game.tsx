@@ -1,4 +1,4 @@
-import { lazy, Suspense, useState } from "react";
+import { lazy, Suspense, useState, useEffect } from "react";
 import { City } from "../lib/city";
 
 import { FormattedMessage } from "react-intl";
@@ -8,18 +8,31 @@ const Globe = lazy(() => import("../components/Globe"));
 const Guesser = lazy(() => import("../components/Guesser"));
 const List = lazy(() => import("../components/List"));
 
+const STORAGE_KEY = "patro_globle_state";
+
 type Props = {
   reSpin: boolean;
 };
 
 export default function Game({ reSpin }: Props) {
-  // Always start fresh — no localStorage persistence
-  const [guesses, setGuesses] = useState<City[]>([]);
-  const [win, setWin] = useState(false);
+  // Restore saved state so refreshing cannot reset the attempt counter
+  const saved = (() => {
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || "null"); }
+    catch { return null; }
+  })();
+
+  const [guesses, setGuesses] = useState<City[]>(saved?.guesses ?? []);
+  const [win, setWin] = useState<boolean>(saved?.win ?? false);
   const [showWin, setShowWin] = useState(false);
 
+  // Persist whenever guesses or win state change
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({ guesses, win }));
+  }, [guesses, win]);
+
+
   // Lose when 4 guesses are used up without finding the answer
-  const lose = !win && guesses.length >= 4;
+  const lose = !win && guesses.length >= 3;
 
   // When the player wins, show the custom message
   const handleWin = () => {
