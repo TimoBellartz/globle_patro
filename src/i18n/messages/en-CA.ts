@@ -2,7 +2,7 @@ import { Messages } from "../../lib/locale";
 
 export const English: Messages = {
   name: "English",
-  helpTitle: "Ihr habt es bis nach Elsenborn geschafft, leider musste ich schon weiter",
+  helpTitle: " ",
   help1: ` `,
   help2: ` `,
   help3: ` `,
@@ -17,7 +17,7 @@ export const English: Messages = {
   Footer2: "Enjoying the game?",
   Footer3: "Buy me a coffee",
   Loading: "Loading...",
-  FAQTitle: "FAQ",
+  FAQTitle: " ",
   q1: "1. How is the distance between the answer and my guess calculated?",
   a1: "Distance between countries is defined as the minimum distance between their land borders along the Earth's surface. Territories (areas that appear in gray when their parent country is guessed) and water borders are not included in distance calculations.",
   q2: "2. How can I play the game if I am colour blind or visually impaired?",

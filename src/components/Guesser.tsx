@@ -43,13 +43,13 @@ export default function Guesser({
 
     const alreadyGuessed = findCity(trimmedName, guesses);
     if (alreadyGuessed) {
-      setError(localeList[locale]["Game6"]);
+      setError("habt ihr schon geraten");
       ref.current?.select();
       return;
     }
     const guessCity = findCity(trimmedName, belgianCities);
     if (!guessCity) {
-      setError(localeList[locale]["Game5"]);
+      setError("seid ihr dumm???");
       ref.current?.select();
       return;
     }
@@ -90,7 +90,7 @@ export default function Guesser({
           onChange={(e) => setGuessName(e.currentTarget.value)}
           ref={ref}
           disabled={win}
-          placeholder={guesses.length === 0 ? localeList[locale]["Game1"] : ""}
+          placeholder={guesses.length === 0 ? "Gebt hier den Ort ein" : ""}
           autoComplete="new-password"
         />
         <button
