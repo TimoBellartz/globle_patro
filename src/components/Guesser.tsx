@@ -1,10 +1,8 @@
-import { FormEvent, useContext, useState, useRef, useEffect } from "react";
+import { FormEvent, useState, useRef, useEffect } from "react";
 import { City } from "../lib/city";
 import { answerCountry, answerName } from "../util/answer";
 import { Message } from "./Message";
 import { cityDistance } from "../util/distance";
-import { LocaleContext } from "../i18n/LocaleContext";
-import localeList from "../i18n/messages";
 import { FormattedMessage } from "react-intl";
 import belgianCities from "../data/belgian_cities";
 
@@ -24,7 +22,6 @@ export default function Guesser({
 }: Props) {
   const [guessName, setGuessName] = useState("");
   const [error, setError] = useState("");
-  const { locale } = useContext(LocaleContext);
 
   const ref = useRef<HTMLInputElement>(null);
   useEffect(() => {
