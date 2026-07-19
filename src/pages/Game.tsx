@@ -18,6 +18,9 @@ export default function Game({ reSpin }: Props) {
   const [win, setWin] = useState(false);
   const [showWin, setShowWin] = useState(false);
 
+  // Lose when 4 guesses are used up without finding the answer
+  const lose = !win && guesses.length >= 4;
+
   // When the player wins, show the custom message
   const handleWin = () => {
     setWin(true);
@@ -33,13 +36,41 @@ export default function Game({ reSpin }: Props) {
 
   return (
     <Suspense fallback={renderLoader()}>
+      {/* Full-screen lose overlay */}
+      {lose && (
+        <div
+          style={{
+            position: "fixed",
+            inset: 0,
+            backgroundColor: "#000",
+            zIndex: 9999,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <p
+            style={{
+              color: "#fff",
+              fontSize: "clamp(2rem, 8vw, 5rem)",
+              fontWeight: 900,
+              fontFamily: "'Montserrat', sans-serif",
+              textAlign: "center",
+              letterSpacing: "0.05em",
+              padding: "0 1rem",
+            }}
+          >
+            IHR KRIEGT MICH NIE
+          </p>
+        </div>
+      )}
       <div className="my-6 px-4 space-y-4 text-center dark:text-gray-200">
       </div>
       <WinMessage show={showWin} setShow={setShowWin} />
       <Guesser
         guesses={guesses}
         setGuesses={setGuesses}
-        win={win}
+        win={win || lose}
         setWin={handleWin}
         practiceMode={false}
       />
