@@ -57,7 +57,7 @@ export default function Game({ reSpin }: Props) {
       />
       {!reSpin && (
         <div className="pb-4 mb-5">
-          <Globe />
+          <Globe guesses={guesses} win={win} />
           <List
             guesses={guesses}
             win={win}

@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { City } from "../lib/city";
 import { answerName } from "../util/answer";
-import Toggle from "./Toggle";
 
 type Props = {
   guesses: City[];
@@ -25,23 +24,21 @@ export default function List({ guesses, win }: Props) {
   const [orderedGuesses, setOrderedGuesses] = useState(
     reorderGuesses(guesses)
   );
-  const [miles, setMiles] = useState(false);
 
   useEffect(() => {
     setOrderedGuesses(reorderGuesses(guesses));
   }, [guesses]);
 
-  function formatKm(m: number, miles: boolean) {
-    const METERS_PER_MILE = 1609.34;
+  function formatKm(m: number) {
     const BIN = 1;
-    const value = miles ? m / METERS_PER_MILE : m / 1000;
+    const value = m / 1000;
     if (value < BIN) return "< " + BIN;
 
     const rounded = Math.round(value / BIN) * BIN;
     const format = (num: number) =>
       num.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
-    return `~ ${format(rounded)}`;
+    return `~ ${format(rounded)} km`;
   }
 
   const qualifier = win ? "Answer" : "Closest";
@@ -89,19 +86,10 @@ export default function List({ guesses, win }: Props) {
       </ul>
       {closest && farthest && (
         <div className="mt-8">
-          <div className="flex items-center space-x-1">
-            <p>
-              <FormattedMessage id="Game8" />:{" "}
-              {formatKm(closest?.proximity ?? 0, miles)}
-            </p>
-            <Toggle
-              name="miles"
-              setToggle={setMiles}
-              toggle={miles}
-              on="km"
-              off="miles"
-            />
-          </div>
+          <p>
+            <FormattedMessage id="Game8" />:{" "}
+            {formatKm(closest?.proximity ?? 0)}
+          </p>
           <p>
             <button
               onClick={() => setIsSortedByDistance(!isSortedByDistance)}

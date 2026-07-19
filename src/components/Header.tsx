@@ -25,7 +25,7 @@ export default function Header({ setReSpin }: Props) {
             className="text-4xl font-extrabold"
             style={{ fontFamily: "'Montserrat'" }}
           >
-            GEHEIMNIS
+            Elsenborn
           </h1>
         </button>
       </div>

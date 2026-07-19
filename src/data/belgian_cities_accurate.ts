@@ -1,118 +1,94 @@
-import { City } from "../lib/city";
+﻿import { City } from "../lib/city";
 
 // Cities and villages in the Belgian Eifel region (eastern Belgium)
-// Coordinates sourced from OpenStreetMap Nominatim (accurate to ~10 m)
+// Coordinates sourced from OpenStreetMap Nominatim
 const belgianCities: City[] = [
-  // Answer city
   { name: "Weywertz", lat: 50.43529, lng: 6.16457 },
-
-  // Very close to Weywertz (< 6 km)
-  { name: "Steinbach", lat: 50.40373, lng: 6.12278 },
-  { name: "Nidrum", lat: 50.44438, lng: 6.19682 },
-  { name: "Schoppen", lat: 50.39095, lng: 6.17589 },
   { name: "Sourbrodt", lat: 50.47725, lng: 6.11437 },
-  { name: "Champagne", lat: 50.43802, lng: 6.14153 },
-
-  // Bütgenbach municipality
-  { name: "Bütgenbach", lat: 50.42673, lng: 6.20536 },
-  { name: "Bütchenbach", lat: 50.44850, lng: 6.21870 },
+  { name: "Halenfeld", lat: 50.35987, lng: 6.22515 },
+  { name: "Medell", lat: 50.32124, lng: 6.16648 },
+  { name: "Pont", lat: 50.36685, lng: 6.03743 },
+  { name: "Steinbach", lat: 50.40373, lng: 6.12278 },
+  // NOT FOUND: Tialement
+  // NOT FOUND: KÃ¼chelscheid
+  // NOT FOUND: BruyÃ¨res
+  // NOT FOUND: BÃ¼tgenbach
   { name: "Elsenborn", lat: 50.45731, lng: 6.22138 },
-  { name: "Wirtzfeld", lat: 50.42840, lng: 6.26191 },
-
-  // Büllingen municipality
-  { name: "Büllingen", lat: 50.40755, lng: 6.25783 },
+  { name: "Berg", lat: 50.79088, lng: 5.49512 },
+  { name: "Nidrum", lat: 50.44438, lng: 6.19682 },
+  // NOT FOUND: BÃ¼tchenbach
+  { name: "BÃ¼llingen", lat: 50.85486, lng: 3.30991 },
   { name: "Rocherath", lat: 50.43441, lng: 6.30094 },
   { name: "Krinkelt", lat: 50.43184, lng: 6.29497 },
   { name: "Honsfeld", lat: 50.38219, lng: 6.28312 },
-  { name: "Hünningen", lat: 50.39461, lng: 6.29153 },
-  { name: "Mürringen", lat: 50.40678, lng: 6.30925 },
+  // NOT FOUND: HÃ¼nningen
+  // NOT FOUND: MÃ¼rringen
+  { name: "Wirtzfeld", lat: 50.4284, lng: 6.26191 },
   { name: "Manderfeld", lat: 50.33109, lng: 6.34006 },
   { name: "Losheimergraben", lat: 50.38019, lng: 6.34266 },
-
-  // Amel municipality
   { name: "Amel", lat: 50.35431, lng: 6.17056 },
   { name: "Born", lat: 50.33231, lng: 6.11661 },
   { name: "Deidenberg", lat: 50.34812, lng: 6.13987 },
   { name: "Heppenbach", lat: 50.36317, lng: 6.21869 },
-  { name: "Montenau", lat: 50.35800, lng: 6.12426 },
+  { name: "Montenau", lat: 50.358, lng: 6.12426 },
   { name: "Meyerode", lat: 50.32884, lng: 6.18849 },
+  { name: "Schoppen", lat: 50.39095, lng: 6.17589 },
   { name: "Eibertingen", lat: 50.36077, lng: 6.15756 },
   { name: "Herresbach", lat: 50.31956, lng: 6.25685 },
   { name: "Iveldingen", lat: 50.36258, lng: 6.13496 },
   { name: "Valender", lat: 50.35001, lng: 6.20047 },
-  { name: "Halenfeld", lat: 50.35987, lng: 6.22515 },
-  { name: "Medell", lat: 50.32124, lng: 6.16648 },
-
-  // Sankt Vith municipality
-  { name: "Sankt Vith", lat: 50.28039, lng: 6.12590 },
+  { name: "Sankt Vith", lat: 50.28039, lng: 6.1259 },
   { name: "Crombach", lat: 50.25913, lng: 6.06805 },
   { name: "Lommersweiler", lat: 50.23892, lng: 6.16515 },
   { name: "Recht", lat: 50.33493, lng: 6.04313 },
-  { name: "Schönberg", lat: 50.28881, lng: 6.26425 },
-  { name: "Wallerode", lat: 50.29870, lng: 6.15993 },
+  // NOT FOUND: SchÃ¶nberg
+  { name: "Wallerode", lat: 50.2987, lng: 6.15993 },
   { name: "Neidingen", lat: 50.25084, lng: 6.14684 },
   { name: "Rodt", lat: 50.28707, lng: 6.07061 },
   { name: "Setz", lat: 50.27745, lng: 6.21093 },
   { name: "Neundorf", lat: 50.26638, lng: 6.09239 },
   { name: "Hinderhausen", lat: 50.27469, lng: 6.04653 },
   { name: "Breitfeld", lat: 50.26335, lng: 6.15272 },
-  { name: "Steinebrück", lat: 50.23837, lng: 6.18285 },
+  // NOT FOUND: SteinebrÃ¼ck
   { name: "Heuem", lat: 50.28655, lng: 6.23683 },
-
-  // Burg-Reuland municipality
   { name: "Burg-Reuland", lat: 50.19675, lng: 6.13426 },
   { name: "Reuland", lat: 50.19541, lng: 6.13626 },
   { name: "Thommen", lat: 50.21906, lng: 6.07434 },
   { name: "Oudler", lat: 50.20231, lng: 6.09337 },
-  { name: "Ouren", lat: 50.13884, lng: 6.13380 },
+  { name: "Ouren", lat: 50.13884, lng: 6.1338 },
   { name: "Steffeshausen", lat: 50.19837, lng: 6.15792 },
-  { name: "Weweler", lat: 50.19310, lng: 6.14900 },
+  { name: "Weweler", lat: 50.1931, lng: 6.149 },
   { name: "Espeler", lat: 50.20322, lng: 6.05284 },
   { name: "Maldingen", lat: 50.23326, lng: 6.03375 },
-
-  // Eupen municipality
   { name: "Eupen", lat: 50.63057, lng: 6.03127 },
   { name: "Kettenis", lat: 50.64601, lng: 6.04578 },
-
-  // Malmedy municipality
   { name: "Malmedy", lat: 50.42653, lng: 6.02761 },
-  { name: "Bévercé", lat: 50.44153, lng: 6.03919 },
+  // NOT FOUND: BÃ©vercÃ©
   { name: "Ligneuville", lat: 50.37572, lng: 6.05493 },
   { name: "Bellevaux-Ligneuville", lat: 50.37735, lng: 6.04657 },
-
-  // Waimes municipality
   { name: "Waimes", lat: 50.47241, lng: 6.12229 },
   { name: "Faymonville", lat: 50.40513, lng: 6.13983 },
   { name: "Robertville", lat: 50.45503, lng: 6.12247 },
   { name: "Ovifat", lat: 50.46636, lng: 6.10706 },
-
-  // Raeren municipality
+  { name: "Champagne", lat: 50.43802, lng: 6.14153 },
   { name: "Raeren", lat: 50.67613, lng: 6.11084 },
-  { name: "Eynatten", lat: 50.69359, lng: 6.08170 },
+  { name: "Eynatten", lat: 50.69359, lng: 6.0817 },
   { name: "Hauset", lat: 50.70802, lng: 6.07084 },
-
-  // Kelmis municipality
-  { name: "Kelmis", lat: 50.71550, lng: 6.01334 },
+  { name: "Kelmis", lat: 50.7155, lng: 6.01334 },
   { name: "Hergenrath", lat: 50.70914, lng: 6.03173 },
   { name: "Neu-Moresnet", lat: 50.71999, lng: 6.02407 },
-
-  // Lontzen municipality
   { name: "Lontzen", lat: 50.68047, lng: 6.00721 },
   { name: "Walhorn", lat: 50.67508, lng: 6.04694 },
-  { name: "Astenet", lat: 50.68819, lng: 6.03530 },
-
-  // Nearby notable locations
+  { name: "Astenet", lat: 50.68819, lng: 6.0353 },
   { name: "Spa", lat: 50.49207, lng: 5.86276 },
   { name: "Stavelot", lat: 50.39424, lng: 5.93103 },
-  { name: "Trois-Ponts", lat: 50.37268, lng: 5.87030 },
+  { name: "Trois-Ponts", lat: 50.37268, lng: 5.8703 },
   { name: "Vielsalm", lat: 50.28422, lng: 5.91628 },
-  { name: "Gouvy", lat: 50.18574, lng: 5.94280 },
+  { name: "Gouvy", lat: 50.18574, lng: 5.9428 },
   { name: "Lierneux", lat: 50.28581, lng: 5.79216 },
   { name: "Stoumont", lat: 50.40695, lng: 5.80836 },
   { name: "Coo", lat: 50.39334, lng: 5.87569 },
   { name: "Francorchamps", lat: 50.45316, lng: 5.95283 },
-
-  // Signal de Botrange area
   { name: "Botrange", lat: 50.50158, lng: 6.09255 },
   { name: "Baraque Michel", lat: 50.51879, lng: 6.06244 },
 ];
